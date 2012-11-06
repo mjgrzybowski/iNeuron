@@ -105,10 +105,7 @@ function drawPhasePlot(data,params) {
 			  sat = Math.floor((Math.abs(ddu)/maxAbs)*100);
 			  }
 			  */
-			  //console.log(abs);
 
-			  //console.log(hue);		  
-					  
 			  //hue = x%180+y%180;
 			  alpha = Math.atan2(v2xC(ddv),u2yC(ddu));
 			  sat = 100
@@ -211,9 +208,9 @@ function showData (data,params)
 {	
 //twovectors2matrix(data.t,data.u),
 
-console.log(data);
 
-	drawPhasePlot(data,params);
+
+	//drawPhasePlot(data,params);
 	
 	$('#chartdiv').html('');
 	$('#chartdiv2').html('');
@@ -297,7 +294,7 @@ pars['JSONpulseInf'] = $('#pulses').val();
 	   data: pars,
 	   success: function(data) {
 			showData (data,pars);
-			console.log(data);
+
 	  }
 	});
 	}
@@ -454,22 +451,10 @@ $('#updateInput').click();
 
 function setEMIpars(a,b,c,d) {
 
-setParam('k',4);
-setParam('C',100);
-
 setParam('a',a);
-setParam('b',b*100);
+setParam('b',b);
 setParam('c',c);
-setParam('d',d*100);
-
-setParam('vr',0.5*(-125+b-Math.sqrt(1625-250*b+b*b)));
-setParam('vt',0.5*(-125-b+Math.sqrt(1625-250*b+b*b)));
-
-//setParam('vr',0.5*(-125+b+Math.sqrt(1625-250*b+b*b)));
-//setParam('vt',0.5*(-125-b-Math.sqrt(1625-250*b+b*b)));
-
-setParam('vpeak',30);
-
+setParam('d',d);
 
 
 updateChart();
@@ -540,35 +525,31 @@ function calculate (params,I) {
 	
 	
 	n=Math.round(params.T/params.tau);
-	v=ones(params.vr,n);
-	v[0]=-70;
+	v=ones(-65,n);
+	v[0]=-65;
 	u=ones(0,n);
-	u[0]=-30;
+	u[0]=params.b*(-65);
     t=ones(0,n);
 	
 
 	
 	for (i=0;i<n-1;i++)
 	{
-		v[1+i]=v[i]+params.tau*(params.k*(v[i]-params.vr)*(v[i]-params.vt)-u[i]+params.ic*I[i])/params.C;
-		
-		u[1+i]=u[i]+params.tau*1*(params.a*(params.b*(v[i]-params.vr)-u[i]));
+		v[1+i]=v[i]+params.tau*0.5*(0.04*(v[i])*(v[i])+5*(v[i])-u[i]+140+params.ic*I[i]);
+		v[1+i]=v[i]+params.tau*0.5*(0.04*(v[i])*(v[i])+5*(v[i])-u[i]+140+params.ic*I[i]);
+		u[1+i]=u[i]+params.tau*(params.a*(params.b*(v[i])-u[i]));
 		
 		t[1+i]=t[i]+params.tau;
 		
-		if (v[i+1]>=params.vpeak)
-		{
-		
-			v[i]=params.vpeak;
+		if (v[i+1]>=30)
+		{		
+			v[i]=30;
 			v[i+1]=params.c;
-			u[i+1]=u[i+1]+params.d;
-		}
-		if (false && u[i+1]>=0)
-		{
-			u[i+1]=0;
+			u[i+1]=u[i]+params.d;
 		}
 	}
-	 getAllParams (params) ;
+	
+	getAllParams (params) ;
 	return {'t': t,'v': v,'u': u};
 
 }
@@ -620,25 +601,25 @@ createSliders([
 		label:'a',
 		min:0.0,
 		max:0.1,
-		init:0.01
+		init:0.02
 	},
 	{
 		label:'b',
 		min:-20,
 		max:6,
-		init:5
+		init:0.2
 	},
 	{
 		label:'c',
 		min:-100,
 		max:100,
-		init:-56
+		init:-65
 	},
 	{
 		label:'d',
 		min:-200,
 		max:200,
-		init:130
+		init:6
 	}
 	,
 	{
@@ -648,48 +629,6 @@ createSliders([
 		init:1
 	}
 	,
-	{
-		label:'vr',
-		min:-100,
-		max:-40,
-		init:-75
-	}
-	,
-	{
-		label:'vt',
-		min:-100,
-		max:-20,
-		init:-45
-	}
-		,
-	{
-		label:'C',
-		min:20,
-		max:200,
-		init:100
-	}
-		,
-	{
-		label:'k',
-		min:0.2,
-		max:4,
-		init:1.2
-	}
-		,
-	{
-		label:'vpeak',
-		min:20,
-		max:100,
-		init:50
-	}
-			,
-	{
-		label:'cI',
-		min:0,
-		max:1000,
-		init:700
-	}
-			,
 	{
 		label:'T',
 		min:100,
@@ -707,7 +646,7 @@ createSliders([
 
 
 
-createInputEditor('[[1000,200,800]]');
+createInputEditor('[[10,200,500]]');
 
 updateChart();
 
