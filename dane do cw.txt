@@ -1,0 +1,41 @@
+bistabilny ??
+C: 100.1
+a: 0.0295
+b: -10.9
+c: -39
+cI: 0
+d: 130
+ic: 0.793
+k: 1.207
+vpeak: 50
+vr: -75.1
+vt: -44.8
+
+
+regular spiking neurons, tonic spiking:
+dane s¹ podane na 282 stronie, na dole
+C: 100
+T: 1000
+k: 1
+pars: Object
+a: 0.03
+b: -2
+c: -50
+d: 100
+ic: 2.278
+vr: -60.1
+vt: -40
+
+regular spiking neuron,(wyjatkowy przypadek) phasic spiking
+strona 284
+C: 100
+T: 1000
+k: 1
+pars: Object
+a: 0.03
+b: 4
+c: -50
+d: 100
+ic: 1.981
+vr: -60.1
+vt: -40
