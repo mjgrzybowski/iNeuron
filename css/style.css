@@ -219,7 +219,10 @@ td { vertical-align: top; }
    ========================================================================== */
 
 
-
+#currentu0 {
+    color:gray;
+    border-bottom-color: gray;
+}
 
 p {
 
