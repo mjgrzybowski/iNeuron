@@ -117,7 +117,8 @@ function EMIlist() {
     list = [
         ['typ 1 z maila (bistable)' , 0.015   , 0.2   , -50   , 1.5,0,8,-70 ],
         ['typ 2 z maila' , -0.02   , -1   , -60   , 8,75,5,-63.8 ],
-        ['typ 3 z maila ( fast-spiking (FS) )' , 0.2   , 0.26  , -65  , 0 ,-0.78,2,-64.73]
+        ['typ 3 z maila ( fast-spiking (FS) )' , 0.2   , 0.26  , -65  , 0 ,-0.78,2,-64.73],
+        ['typ 4 z maila ( LTS )' , 0.02   , 0.25  , -65  , 2 ,0,2,-64.73]
 
     ];
 
